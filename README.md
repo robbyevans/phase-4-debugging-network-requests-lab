@@ -62,12 +62,39 @@ developing your own process.
 
 - Add a new toy when the toy form is submitted
 
+  results in s 500 (internal server error)
+  the data from the form is not displayed on the DOM or updated in the database
+
   - How I debugged:
+  1.open Rails server logs to check the source of the problem
+  2.look at the last request that came through
+  3.locate the error message and find the source
+
+  - solution
+  the error originated from the Controller specifically NameError (uninitialized constant ToysController::Toys):
+  resolved by correcting the name error from Toys to Toy. 
+  problem is now solved
 
 - Update the number of likes for a toy
 
+  brings up error unexpected end of JSON INPUT error
+
   - How I debugged:
+  1.check your fetch request in the front end if it is receiving a json response
+  2.check the controller action and make sure to render json
+
+  solution
+  - the back end controller action did not include render json
+  - added render json to the update action
+
 
 - Donate a toy to Goodwill (and delete it from our database)
 
+results in error ActionController::RoutingError (No route matches [DELETE] "/toys/9"):
+
   - How I debugged:
+  1.Check the error message in the Rails server logs
+
+  solution 
+  - the error message in the rails server logs indicate that there is no route defined to handle  DELETE request in our router.rb
+  - added a route :destroy in our resources inside routes.rb
